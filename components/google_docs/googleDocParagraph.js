@@ -11,12 +11,19 @@ export default function GoogleDocParagraph({ alignment, font_size, paragraphStyl
   );
 }
 
-export function buildClassName(...b){
-  return b.join(' ')
+
+export function handleSpacing(text=''){
+  const richText = text.replaceAll(' ', '&nbsp;')
+  return <span dangerouslySetInnerHTML={{ __html: richText }} />
+}
+
+export function buildClassName(...args){
+  return args.join(' ')
 }
 
 export function paragraphAlignment(alignment = '') {
   const align = alignment?.toLowerCase() ?? '' 
+  console.log(align)
   switch (align) {
     case 'center':
       return css.alignCenter

@@ -3,7 +3,8 @@ import Layout from '../../components/layout'
 import Head from 'next/head'
 import Date from '../../components/date'
 import utilStyles from '../../styles/utils.module.css'
-import GoogleDocParagraph from '../../components/googleDocParagraph'
+import GoogleDocParagraph from '../../components/google_docs/googleDocParagraph'
+import GAPI from '../../lib/GAPI'
 
 
 
@@ -13,11 +14,11 @@ export async function getStaticProps({ params }) {
   console.log(params)
   let json = { eli: 'is awesome' }
 
-  const data = await fetch('https://script.google.com/macros/s/AKfycbw8j5wGTn0DDzAungzfztsjS5toW1lxQQiGKfd1zXKZ_jFiqrZswQXpIzvFTm4xjQia/exec')
+  // const data = await fetch('https://script.google.com/macros/s/AKfycbw8j5wGTn0DDzAungzfztsjS5toW1lxQQiGKfd1zXKZ_jFiqrZswQXpIzvFTm4xjQia/exec')
 
-  let jsonText = await data.text()
+  // let jsonText = await data.text()
 
-  json = JSON.parse(jsonText)
+  json = await GAPI.getDoc('https://docs.google.com/document/d/1SxrjSRdfSzcWa-M1OrK9tPZF1kEB9maI4zkoTkcSjtY/edit')
 
   return {
     props: {
@@ -27,8 +28,7 @@ export async function getStaticProps({ params }) {
 }
 
 export default function Post({ json }) {
-  console.log(json)
-
+  // console.log(json)
   return (
     <Layout>
       <Head>
