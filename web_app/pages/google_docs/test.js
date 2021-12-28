@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Date from '../../components/date'
 import utilStyles from '../../styles/utils.module.css'
 import GoogleDocParagraph from '../../components/google_docs/googleDocParagraph'
-import GAPI from '../../lib/GAPI'
+import GAPI, { getDocV2 } from '../../lib/gdoc/GAPI'
 
 
 
@@ -34,6 +34,9 @@ export default function Post({ json }) {
       <Head>
         <title> {'Google Doc Testing'} </title>
       </Head>
+      <Button onClick={getDocV2}>
+        Create a doc
+      </Button>
       {json.map((item, idx) => <GoogleDocParagraph alignment={item.alignment} paragraphStyle={item.paragraph_style} key={idx} >
         {item.text}
       </GoogleDocParagraph>
