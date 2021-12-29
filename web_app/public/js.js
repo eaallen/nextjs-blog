@@ -1,50 +1,3 @@
-import Layout from '../../components/layout'
-// import { getAllPostIds, getPostData } from '../../lib/posts'
-import Head from 'next/head'
-import Date from '../../components/date'
-import utilStyles from '../../styles/utils.module.css'
-import GoogleDocParagraph from '../../components/google_docs/googleDocParagraph'
-import GAPI, { getDocV2 } from '../../lib/gdoc/myGAPI'
-
-export async function getStaticProps({ params }) {
-  // const postData = await getPostData(params.id)
-  // get data
-  console.log(params)
-  let json = { eli: 'is awesome' }
-
-  // const data = await fetch('https://script.google.com/macros/s/AKfycbw8j5wGTn0DDzAungzfztsjS5toW1lxQQiGKfd1zXKZ_jFiqrZswQXpIzvFTm4xjQia/exec')
-
-  // let jsonText = await data.text()
-
-  json = await GAPI.getDoc('https://docs.google.com/document/d/1SxrjSRdfSzcWa-M1OrK9tPZF1kEB9maI4zkoTkcSjtY/edit')
-
-  return {
-    props: {
-      json
-    }
-  }
-}
-
-export default function Post({ json }) {
-  return (
-    <Layout>
-      <Head>
-        <title> {'Google Doc Testing'} </title>
-        {/* <script id="here_it_goes" key="123abcde" src='/js.js'></script> */}
-        <script id="gapi_script" async="" defer=""
-          onload={onGapiLoad()}
-          // onreadystatechange="if (this.readyState === 'complete') this.onload()"
-          src="https://apis.google.com/js/api.js"></script>
-      </Head>
-      {/* <button onClick={handleAuthClick} >Authorization</button> */}
-      {json.map((item, idx) => <GoogleDocParagraph alignment={item.alignment} paragraphStyle={item.paragraph_style} key={idx} >
-        {item.text}
-      </GoogleDocParagraph>
-      )}
-    </Layout>
-  )
-}
-
 const CLIENT_ID = '445385097267-vgo50go7l1pb6phua5tk9ea82riq0h35.apps.googleusercontent.com'
 const API_KEY = 'AIzaSyD3AJ0B3HGnnzfwQqnqnTz77bs5ZQFucmA';
 
@@ -55,12 +8,10 @@ const DISCOVERY_DOCS = [
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
 const SCOPES = "https://www.googleapis.com/auth/documents.readonly";
-
+onGapiLoad()
 function onGapiLoad() {
-  if(typeof window !== 'undefined'){
-    console.log('we are here we are here we are here', window)
-    handleClientLoad()
-  }
+  console.log('we are here we are here we are here', window)
+  // handleClientLoad()
 }
 
 
