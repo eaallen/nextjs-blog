@@ -1,9 +1,10 @@
 const express = require('express');
-const docs = require('@googleapis/docs')
+// const docs = require('@googleapis/docs')
 const {authenticate} = require('@google-cloud/local-auth');
 const path = require('path');
-
+const {google} = require('googleapis');
 const router = express.Router();
+const docs = google.docs('v1');
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {

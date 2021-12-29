@@ -18,6 +18,12 @@ export async function getStaticProps({ params }) {
 
   json = await GAPI.getDoc('https://docs.google.com/document/d/1SxrjSRdfSzcWa-M1OrK9tPZF1kEB9maI4zkoTkcSjtY/edit')
 
+  if(typeof window == 'undefined'){
+    console.log('sssssssssssssssssssss')
+  }
+
+  console.log('dddd')
+
   return {
     props: {
       json
@@ -34,9 +40,10 @@ export default function Post({ json }) {
         <script id="gapi_script" async="" defer=""
           onload={onGapiLoad()}
           // onreadystatechange="if (this.readyState === 'complete') this.onload()"
-          src="https://apis.google.com/js/api.js"></script>
+          src="https://apis.google.com/js/api.js">
+        </script>
       </Head>
-      {/* <button onClick={handleAuthClick} >Authorization</button> */}
+      <button onClick={handleAuthClick} >Authorization</button>
       {json.map((item, idx) => <GoogleDocParagraph alignment={item.alignment} paragraphStyle={item.paragraph_style} key={idx} >
         {item.text}
       </GoogleDocParagraph>
@@ -146,9 +153,25 @@ function printDocBody() {
     var doc = response.result;
     // appendPre(JSON.stringify(doc.body, null, 4));
     console.log(doc.body)
+    parseDoc(doc.body)
   }, function (response) {
     console.error(response)
     // appendPre('Error: ' + response.result.error.message);
   });
+}
+
+function parseDoc(body){
+  const {content} = body
+
+  for(const item of content){
+    if(item.paragraph){
+      if (item.paragraph.elements){
+        // handle elements
+        for (const el of item.paragraph.elements){
+          console.log(el.textRun?.content)
+        }
+      }
+    }
+  }
 }
 
